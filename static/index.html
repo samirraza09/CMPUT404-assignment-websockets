@@ -22,7 +22,7 @@
     "/>
     <script src="json2.js"></script>
   </head> 
-  <body bgcolor="white" height="100%" width="100%"> 
+  <body bgcolor="#380ee3" height="100%" width="100%"> 
     <div id="debug"></div>
     <canvas id="c" width="100%" height="100%" style="-webkit-tap-highlight-color: transparent;"></canvas> 
 
@@ -60,7 +60,6 @@ function drawCircle(context,entity) {
         var y = entity["y"]; 
         var l = entity["length"]
 
-        // https://www.kirupa.com/html5/drawing_triangles_on_the_canvas.htm
         moveTo(x, y - (l*0.9));
         lineTo(x - l, y + l);
         lineTo(x + l, y + l);
@@ -69,12 +68,9 @@ function drawCircle(context,entity) {
         moveTo(x, y + (l*1.5));
         lineTo(x - l, y - (l*0.25));
         lineTo(x + l, y - (l*0.25));
-        //lineTo(x, y - (l*0.75));
         
-        // lineTo(x + l, y);
-        closePath();     
+        closePath();
         lineWidth = entity["lineWidth"]
-        //moveTo(x,y);
         strokeStyle = entity["colour"];
         fillStyle = entity["fillColor"];
         fill()
@@ -303,6 +299,8 @@ function wsSetup() {
     socket = new WebSocket(url);
     socket.onopen = function() {
         //XXX: TODO What are you going to do here?
+        socket.send(JSON.stringify(world))
+        wscounter++
     };
     socket.onerror = function(msg) {
         debug("WebSocket Error:" + msg.data);
